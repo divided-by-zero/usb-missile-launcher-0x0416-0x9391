@@ -1,0 +1,65 @@
+=======================================================
+missile_launcher-1.0 idVendor: 0x0416 idProduct: 0x9391
+=======================================================
+
+Linux kernel module missile_launcher-1.0
+Copyright (C) 2012  Dirk Stanke <dirk@stanke.eu>, Dennis Labriola <l@briola.net>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+Introduction
+=============
+
+This is a linux kernel module for the usb missile launcher idVendor: 0x0416 idProduct: 0x9391.
+It makes use of the /sys/ pseudo-filesystem for user interaction. So you could easily write an user
+program in many programming languages to control the device. An example shell-script, how to control the device
+is given with this tarball(mc.sh). Also there is hot-plugging support via some udev rules(look into the installation chapter, how to set it up properly).
+
+Installing missile_launcher on GNU/Linux Systems
+================================================
+
+Dependencies: Linux kernel headers!
+
+1) Unzip the missile_launcher-1.0 tarball.
+    ->  tar -xvf missile_launcher-1.0.tar
+
+2) Install the linux kernel headers. 
+    -> uname -a to see which headers you need.
+        -> on ubuntu/mint try something like: sudo apt-get install linux-headers-*-*
+            (replacing the "*" with your right version gathered via uname -a)
+
+3) Lookup the path where your kernel header files have been installed.
+    -> on my system it is: /usr/src/linux-headers-3.0.0-12-generic/
+
+4) Change directory into misslile_launcher-1.0/
+    -> make KDIR=/your/path/to/headers/
+        -> you should now have a missile_launcher.ko file in your directory!
+
+5) Get hot-plugging support working!
+    -> edit the 10-usb.rules file. 
+       You need to replace the /your/path/to/missile_launcher.ko path with the real path to the .ko file.
+        -> now: sudo cp missile_launcher.ko /etc/udev/rules.d/
+            -> Plug-in your device and check via: "lsmod | grep missile_launcher" if it has been loaded.
+            If the module didn't load up try to load it manually via: sudo insmod missile_launcher.ko.
+
+6) Start mc.sh (./mc.sh) and check if all works properly.   
+       
+        
+
+
+
+
+
+
